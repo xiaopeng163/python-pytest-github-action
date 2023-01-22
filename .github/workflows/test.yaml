@@ -16,6 +16,7 @@ jobs:
       - name: run py test
         run: pytest --cov-report html:htmlcov --cov-report term --cov=project tests
       - name: upload test reports
+        if: failure()
         uses: actions/upload-artifact@v3
         with:
           name: test-report
