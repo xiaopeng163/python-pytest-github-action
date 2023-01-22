@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-22.04
     #if: ${{ failure() }}
     if: success()
-    needs: test-code
+    needs: [build-code, test-code]
     steps:
       - name: checkout code
         uses: actions/checkout@v3
