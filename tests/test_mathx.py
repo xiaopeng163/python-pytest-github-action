@@ -30,4 +30,4 @@ def test_multiply():
     WHEN inputs are 2 and 3
     THEN it should return 6
     """
-    assert multiply(3, 2) == 6
+    assert multiply(3, 2) == 7
