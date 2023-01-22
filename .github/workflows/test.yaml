@@ -23,7 +23,8 @@ jobs:
   
   deploy:
     runs-on: ubuntu-22.04
-    if: ${{ failure() }}
+    #if: ${{ failure() }}
+    if: failure()
     needs: test-code
     steps:
       - name: checkout code
