@@ -18,10 +18,10 @@ jobs:
       - name: install requirements py38
         run: pip install -r requirements.txt
       - name: run py test py38
-        id: run-py-test
+        id: run-py-test-py38
         run: pytest --cov-report html:htmlcov --cov-report term --cov=project tests
       - name: upload test reports py38
-        if: failure() && steps.run-py-test.outcome == 'failure'
+        if: failure() && steps.run-py-test-py38.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: test-report
@@ -33,10 +33,10 @@ jobs:
       - name: install requirements py39
         run: pip install -r requirements.txt
       - name: run py test py39
-        id: run-py-test
+        id: run-py-test-py39
         run: pytest --cov-report html:htmlcov --cov-report term --cov=project tests
       - name: upload test reports py39
-        if: failure() && steps.run-py-test.outcome == 'failure'
+        if: failure() && steps.run-py-test-py39.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: test-report
