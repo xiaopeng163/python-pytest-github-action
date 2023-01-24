@@ -7,41 +7,29 @@ on:
 
 jobs:
   test-code:
+    strategy:
+      matrix:
+        version: ['3.8', '3.9', '3.10']
     runs-on: ubuntu-22.04
     steps:
       - name: checkout code
         uses: actions/checkout@v3
       - uses: actions/setup-python@v4
-        name: set up py38
+        name: set up
         with:
-          python-version: '3.8' 
-      - name: install requirements py38
+          python-version: ${{ matrix.version }}
+      - name: install requirements
         run: pip install -r requirements.txt
-      - name: run py test py38
-        id: run-py-test-py38
+      - name: run py test
+        id: run-py-test
         run: pytest --cov-report html:htmlcov --cov-report term --cov=project tests
-      - name: upload test reports py38
-        if: failure() && steps.run-py-test-py38.outcome == 'failure'
+      - name: upload test reports
+        if: failure() && steps.run-py-test.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: test-report
           path: htmlcov/
-      - uses: actions/setup-python@v4
-        name: set up py39
-        with:
-          python-version: '3.9' 
-      - name: install requirements py39
-        run: pip install -r requirements.txt
-      - name: run py test py39
-        id: run-py-test-py39
-        run: pytest --cov-report html:htmlcov --cov-report term --cov=project tests
-      - name: upload test reports py39
-        if: failure() && steps.run-py-test-py39.outcome == 'failure'
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-report
-          path: htmlcov/
-  
+
   deploy:
     runs-on: ubuntu-22.04
     if: success()
