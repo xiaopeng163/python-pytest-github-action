@@ -7,9 +7,10 @@ on:
 
 jobs:
   test-code:
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-22.04, ubuntu-20.04]
         version: ['3.8', '3.9', '3.10']
     steps:
       - name: checkout code
@@ -27,7 +28,7 @@ jobs:
         if: failure() && steps.run-py-test.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
-          name: test-report-${{ matrix.version }}
+          name: test-report-${{ matrix.os }}-${{ matrix.version }}
           path: htmlcov/
 
   
